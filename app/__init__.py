@@ -73,3 +73,7 @@ def create_app() -> Flask:
         _ensure_default_admin_credentials()
 
     return app
+
+
+# WSGI entrypoint for production servers (e.g., gunicorn app:app).
+app = create_app()
