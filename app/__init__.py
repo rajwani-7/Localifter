@@ -23,7 +23,7 @@ def _ensure_default_admin_credentials() -> None:
 
 
 def _resolve_database_uri() -> str:
-    configured_uri = os.environ.get("DATABASE_URL")
+    configured_uri = os.environ.get("DATABASE_URL") or os.environ.get("SQLALCHEMY_DATABASE_URI")
     if configured_uri:
         # Render may provide legacy postgres:// URLs; SQLAlchemy expects postgresql://.
         if configured_uri.startswith("postgres://"):
@@ -32,8 +32,14 @@ def _resolve_database_uri() -> str:
             return f"sqlite:///{os.path.join(os.getcwd(), 'localift_flask.db')}"
         return configured_uri
 
-    if find_spec("pymysql") is not None:
-        return "mysql+pymysql://root:password@127.0.0.1/localift"
+    # Optional explicit local MySQL URL for development machines only.
+    local_mysql_uri = os.environ.get("LOCAL_MYSQL_URL")
+    if local_mysql_uri and find_spec("pymysql") is not None:
+        return local_mysql_uri
+
+    # On Render, fall back to /tmp sqlite only if DATABASE_URL was not injected.
+    if os.environ.get("RENDER"):
+        return "sqlite:////tmp/localift_flask.db"
 
     return f"sqlite:///{os.path.join(os.getcwd(), 'localift_flask.db')}"
 
