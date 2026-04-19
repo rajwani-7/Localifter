@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Helper Status | LocaLifter{% endblock %}
+{% block content %}
+<section class="mx-auto max-w-3xl rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-glass backdrop-blur-xl">
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <div>
+      <div class="inline-flex rounded-full bg-blue-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.3em] text-blue-700">Application status</div>
+      <h1 class="mt-4 font-display text-3xl font-extrabold tracking-tight text-slate-950">Helper onboarding review</h1>
+    </div>
+    {% if application %}
+      <span class="rounded-full px-4 py-2 text-sm font-bold {% if application.status == 'pending' %}bg-amber-100 text-amber-800{% elif application.status == 'approved' %}bg-emerald-100 text-emerald-800{% else %}bg-rose-100 text-rose-800{% endif %}">{{ application.status|upper }}</span>
+    {% endif %}
+  </div>
+
+  {% if not application %}
+    <div class="mt-8 rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+      <p class="text-slate-600">You have no helper application on file yet.</p>
+      <a href="{{ url_for('helper.become_helper') }}" class="mt-4 inline-flex rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-3 text-sm font-semibold text-white">Apply now</a>
+    </div>
+  {% elif application.status == 'pending' %}
+    <div class="mt-8 rounded-3xl border border-amber-200 bg-amber-50 p-8 text-center text-amber-900">
+      <div class="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-amber-300 border-t-amber-700"></div>
+      <p class="text-xl font-bold">Your application is under admin review.</p>
+      <p class="mt-2">Please wait for approval.</p>
+    </div>
+  {% elif application.status == 'approved' %}
+    <div class="mt-8 grid gap-4 sm:grid-cols-2">
+      <div class="rounded-3xl border border-emerald-200 bg-emerald-50 p-6">
+        <div class="text-sm font-bold uppercase tracking-[0.24em] text-emerald-700">Login ID</div>
+        <div class="mt-2 text-2xl font-extrabold text-slate-950">{{ application.login_id }}</div>
+      </div>
+      <div class="rounded-3xl border border-emerald-200 bg-emerald-50 p-6">
+        <div class="text-sm font-bold uppercase tracking-[0.24em] text-emerald-700">Password</div>
+        <div class="mt-2 text-2xl font-extrabold text-slate-950">{{ application.temp_password }}</div>
+      </div>
+    </div>
+    <div class="mt-6 rounded-3xl border border-slate-200 bg-white p-6">
+      <p class="text-slate-700">Your helper profile is live. Use the credentials above to log in and access the helper dashboard.</p>
+      <a href="{{ url_for('auth.login') }}" class="mt-4 inline-flex rounded-2xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white">Go to Login</a>
+    </div>
+  {% else %}
+    <div class="mt-8 rounded-3xl border border-rose-200 bg-rose-50 p-8 text-center text-rose-900">
+      <p class="text-xl font-bold">Sorry, you are currently not eligible.</p>
+      <p class="mt-2">Please try again later.</p>
+      {% if application.rejection_reason %}
+        <p class="mt-4 rounded-2xl bg-white px-4 py-3 text-sm text-slate-700">{{ application.rejection_reason }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

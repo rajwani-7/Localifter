@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Sign Up | LocaLifter{% endblock %}
+{% block content %}
+<section class="mx-auto max-w-2xl rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-glass backdrop-blur-xl">
+  <div class="max-w-xl">
+    <div class="inline-flex rounded-full bg-blue-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.3em] text-blue-700">Customer registration</div>
+    <h1 class="mt-5 font-display text-3xl font-extrabold tracking-tight text-slate-950">Create your customer profile</h1>
+    <p class="mt-2 text-sm text-slate-600">Use the same account to search helpers, book services, rate work, and rebook trusted people.</p>
+  </div>
+
+  <form method="POST" class="mt-8 grid gap-5 sm:grid-cols-2">
+    {{ form.hidden_tag() }}
+    <div>
+      <label class="mb-2 block text-sm font-semibold text-slate-700">{{ form.full_name.label.text }}</label>
+      {{ form.full_name(class_='w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100') }}
+    </div>
+    <div>
+      <label class="mb-2 block text-sm font-semibold text-slate-700">{{ form.email.label.text }}</label>
+      {{ form.email(class_='w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100') }}
+    </div>
+    <div>
+      <label class="mb-2 block text-sm font-semibold text-slate-700">{{ form.phone.label.text }}</label>
+      {{ form.phone(class_='w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100') }}
+    </div>
+    <div class="sm:col-span-2">
+      <label class="mb-2 block text-sm font-semibold text-slate-700">{{ form.address.label.text }}</label>
+      {{ form.address(rows=3, class_='w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100') }}
+    </div>
+    <div class="sm:col-span-2">
+      <label class="mb-2 block text-sm font-semibold text-slate-700">{{ form.password.label.text }}</label>
+      {{ form.password(class_='w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100') }}
+    </div>
+    <div class="sm:col-span-2">
+      <button class="w-full rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition hover:-translate-y-0.5">Create Account</button>
+    </div>
+  </form>
+</section>
+{% endblock %}

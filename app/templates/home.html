@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+{% block title %}LocaLifter | Premium Service Marketplace{% endblock %}
+{% block content %}
+<section class="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+  <div class="space-y-8">
+    <div class="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white/70 px-4 py-2 text-xs font-bold uppercase tracking-[0.3em] text-blue-700 shadow-sm backdrop-blur">
+      <span class="h-2 w-2 rounded-full bg-cyan-500"></span>
+      Trusted local services, one platform
+    </div>
+
+    <div class="space-y-5">
+      <h1 class="font-display text-5xl font-extrabold tracking-tight text-slate-950 sm:text-6xl">
+        Book premium help or start earning as a verified helper.
+      </h1>
+      <p class="max-w-2xl text-lg leading-8 text-slate-600">
+        LocaLifter connects customers and skilled helpers with elegant onboarding, fast booking, secure access, live notifications, and a clean dashboard experience across mobile and desktop.
+      </p>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-3">
+      <div class="rounded-3xl border border-white/70 bg-white/80 p-4 shadow-glass backdrop-blur-xl">
+        <div class="text-sm font-semibold text-slate-500">Verified helpers</div>
+        <div class="mt-2 text-2xl font-extrabold text-slate-950">8 service categories</div>
+      </div>
+      <div class="rounded-3xl border border-white/70 bg-white/80 p-4 shadow-glass backdrop-blur-xl">
+        <div class="text-sm font-semibold text-slate-500">Fast booking</div>
+        <div class="mt-2 text-2xl font-extrabold text-slate-950">Instant requests</div>
+      </div>
+      <div class="rounded-3xl border border-white/70 bg-white/80 p-4 shadow-glass backdrop-blur-xl">
+        <div class="text-sm font-semibold text-slate-500">Secure access</div>
+        <div class="mt-2 text-2xl font-extrabold text-slate-950">Role-based login</div>
+      </div>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+      <a href="{{ url_for('helper.become_helper') }}" class="group rounded-[2rem] border border-blue-100 bg-gradient-to-br from-white to-blue-50 p-6 shadow-2xl shadow-blue-500/10 transition duration-300 hover:-translate-y-1 hover:shadow-blue-500/20">
+        <div class="flex items-center justify-between">
+          <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 text-2xl text-white shadow-lg shadow-blue-500/20">🧑‍🔧</div>
+          <span class="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue-700 transition group-hover:bg-blue-600 group-hover:text-white">Start now</span>
+        </div>
+        <h2 class="mt-6 font-display text-2xl font-bold text-slate-950">Become a Helper</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Apply with your ID, profile photo, skill category, and availability. Once approved, your helper credentials are generated automatically.</p>
+      </a>
+
+      <a href="{{ url_for('helper.want_helper') }}" class="group rounded-[2rem] border border-slate-200 bg-gradient-to-br from-slate-950 to-slate-800 p-6 text-white shadow-2xl shadow-slate-950/20 transition duration-300 hover:-translate-y-1 hover:shadow-slate-900/30">
+        <div class="flex items-center justify-between">
+          <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 text-2xl backdrop-blur">🔎</div>
+          <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-white/90">Find help</span>
+        </div>
+        <h2 class="mt-6 font-display text-2xl font-bold">Want a Helper</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-300">Create a customer account, search by service category, review helper profiles, and book the right person in seconds.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="relative">
+    <div class="absolute -left-10 top-6 h-32 w-32 rounded-full bg-cyan-400/20 blur-3xl"></div>
+    <div class="absolute -right-6 bottom-10 h-40 w-40 rounded-full bg-blue-500/20 blur-3xl"></div>
+    <div class="relative overflow-hidden rounded-[2rem] border border-white/70 bg-white/75 p-6 shadow-2xl shadow-blue-500/10 backdrop-blur-2xl">
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="rounded-3xl bg-gradient-to-br from-blue-600 to-cyan-500 p-6 text-white shadow-lg shadow-blue-500/20">
+          <div class="text-sm font-semibold uppercase tracking-[0.25em] text-white/80">Hero Banner</div>
+          <h3 class="mt-4 font-display text-3xl font-bold leading-tight">Elegant local service booking</h3>
+          <p class="mt-3 text-sm text-white/85">Smooth onboarding, trusted helpers, and a polished experience built for mobile-first service discovery.</p>
+        </div>
+
+        <div class="space-y-4">
+          <div class="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div class="text-sm font-bold text-slate-500">Service illustration</div>
+            <div class="mt-3 grid grid-cols-2 gap-3 text-sm font-semibold text-slate-700">
+              <div class="rounded-2xl bg-slate-50 p-3">⚡ Electrician</div>
+              <div class="rounded-2xl bg-slate-50 p-3">🧹 Cleaner</div>
+              <div class="rounded-2xl bg-slate-50 p-3">🔧 Mechanic</div>
+              <div class="rounded-2xl bg-slate-50 p-3">🪚 Carpenter</div>
+            </div>
+          </div>
+          <div class="rounded-3xl border border-slate-200 bg-slate-950 p-4 text-white shadow-sm">
+            <div class="text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">Live trust</div>
+            <div class="mt-2 text-2xl font-extrabold">4.9 average rating</div>
+            <p class="mt-2 text-sm text-slate-300">Verified profiles, clean reviews, and status-based helper visibility.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 grid gap-4 sm:grid-cols-3">
+        <div class="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
+          <div class="text-xs font-bold uppercase tracking-widest text-slate-400">Trust badge</div>
+          <div class="mt-1 text-lg font-extrabold text-slate-950">Verified ID</div>
+        </div>
+        <div class="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
+          <div class="text-xs font-bold uppercase tracking-widest text-slate-400">Trust badge</div>
+          <div class="mt-1 text-lg font-extrabold text-slate-950">Fast support</div>
+        </div>
+        <div class="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
+          <div class="text-xs font-bold uppercase tracking-widest text-slate-400">Trust badge</div>
+          <div class="mt-1 text-lg font-extrabold text-slate-950">Mobile friendly</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mt-12 grid gap-6 lg:grid-cols-3">
+  <div class="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-glass backdrop-blur-xl">
+    <div class="text-sm font-bold uppercase tracking-[0.24em] text-blue-700">How it works</div>
+    <p class="mt-3 text-slate-600">Choose a path, fill the correct form, and move directly into a focused dashboard built for your role.</p>
+  </div>
+  <div class="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-glass backdrop-blur-xl">
+    <div class="text-sm font-bold uppercase tracking-[0.24em] text-blue-700">Email simulation</div>
+    <p class="mt-3 text-slate-600">Approvals, bookings, and reviews create in-app notifications that simulate production communication.</p>
+  </div>
+  <div class="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-glass backdrop-blur-xl">
+    <div class="text-sm font-bold uppercase tracking-[0.24em] text-blue-700">Responsive UI</div>
+    <p class="mt-3 text-slate-600">The same layout compresses cleanly on phones, tablets, and large desktop screens.</p>
+  </div>
+</section>
+
+<footer class="mt-16 rounded-[2rem] border border-white/70 bg-slate-950 px-6 py-8 text-white shadow-2xl shadow-slate-950/20">
+  <div class="grid gap-6 sm:grid-cols-3">
+    <div>
+      <div class="font-display text-2xl font-bold">LocaLifter</div>
+      <p class="mt-3 text-sm text-slate-300">Modern local service marketplace for helpers, customers, and admin operations.</p>
+    </div>
+    <div>
+      <div class="text-sm font-bold uppercase tracking-[0.25em] text-cyan-300">Contact</div>
+      <p class="mt-3 text-sm text-slate-300">support@localifter.com</p>
+      <p class="text-sm text-slate-300">+91 98765 43210</p>
+    </div>
+    <div>
+      <div class="text-sm font-bold uppercase tracking-[0.25em] text-cyan-300">Office</div>
+      <p class="mt-3 text-sm text-slate-300">Local service operations, live customer support, and verified helper onboarding.</p>
+    </div>
+  </div>
+</footer>
+{% endblock %}<!doctype html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LocaLift | Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ["Sora", "sans-serif"],
+              body: ["Manrope", "sans-serif"],
+            },
+            colors: {
+              ink: "#0f172a",
+              aqua: "#06b6d4",
+              emerald: "#22c55e",
+              pearl: "#f8fafc",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body class="min-h-full bg-pearl font-body text-ink antialiased">
+    <div class="fixed right-0 top-1/2 z-40 -translate-y-1/2">
+      <details class="group rounded-l-2xl border border-slate-300 bg-white/95 shadow-lg backdrop-blur">
+        <summary class="cursor-pointer list-none rounded-l-2xl bg-slate-900 px-4 py-3 text-sm font-bold text-white">
+          Admin Login
+        </summary>
+        <div class="w-72 p-4">
+          <form method="POST" action="{{ url_for('admin.admin_login_side') }}" class="space-y-3">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <div>
+              <label class="mb-1 block text-xs font-semibold text-slate-600">Admin Username</label>
+              <input name="username" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-aqua focus:outline-none" placeholder="admin" />
+            </div>
+            <div>
+              <label class="mb-1 block text-xs font-semibold text-slate-600">Password</label>
+              <input type="password" name="password" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-aqua focus:outline-none" placeholder="admin" />
+            </div>
+            <button class="w-full rounded-lg bg-gradient-to-r from-aqua to-emerald px-3 py-2 text-sm font-bold text-white hover:opacity-95">
+              Login as Admin
+            </button>
+          </form>
+        </div>
+      </details>
+    </div>
+
+    <main class="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-12">
+      <div class="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full bg-cyan-300/50 blur-3xl"></div>
+      <div class="pointer-events-none absolute -bottom-20 -right-20 h-72 w-72 rounded-full bg-emerald-300/50 blur-3xl"></div>
+
+      <section class="w-full max-w-3xl rounded-3xl border border-white/70 bg-white/85 p-8 shadow-xl backdrop-blur sm:p-10">
+        <div class="mx-auto mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-aqua to-emerald text-xl font-extrabold text-white">LL</div>
+        <h1 class="font-display text-4xl font-extrabold tracking-tight sm:text-5xl">LocaLift</h1>
+        <p class="mt-3 text-lg text-slate-600">Choose your path in one tap.</p>
+
+        <div class="mt-8 grid gap-4 sm:grid-cols-2">
+          <a href="{{ url_for('helper.become_helper') }}" class="group rounded-2xl bg-gradient-to-r from-aqua to-emerald px-6 py-5 text-white shadow-lg transition hover:-translate-y-0.5 hover:opacity-95">
+            <div class="text-2xl">🧑‍🔧</div>
+            <div class="mt-2 text-xl font-bold">Become Helper</div>
+            <p class="mt-1 text-sm text-white/90">Apply, get verified, and start earning.</p>
+          </a>
+
+          <a href="{{ url_for('helper.want_helper') }}" class="group rounded-2xl bg-gradient-to-r from-slate-800 to-slate-700 px-6 py-5 text-white shadow-lg transition hover:-translate-y-0.5 hover:opacity-95">
+            <div class="text-2xl">🔎</div>
+            <div class="mt-2 text-xl font-bold">Want Helper</div>
+            <p class="mt-1 text-sm text-white/90">Find trusted local professionals fast.</p>
+          </a>
+        </div>
+
+      </section>
+    </main>
+  </body>
+</html>

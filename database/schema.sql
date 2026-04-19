@@ -1,0 +1,131 @@
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  full_name VARCHAR(140) NOT NULL,
+  email VARCHAR(140) NOT NULL UNIQUE,
+  phone VARCHAR(20) UNIQUE,
+  address VARCHAR(255),
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(20) NOT NULL DEFAULT 'customer',
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
+  last_login_at DATETIME NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS helper_applications (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NULL,
+  full_name VARCHAR(140) NOT NULL,
+  email VARCHAR(140) NOT NULL,
+  mobile_number VARCHAR(20) NOT NULL,
+  address VARCHAR(255) NOT NULL,
+  city VARCHAR(120) NOT NULL,
+  state VARCHAR(120) NOT NULL,
+  pincode VARCHAR(12) NOT NULL,
+  aadhaar_number VARCHAR(20) NOT NULL,
+  skill_category VARCHAR(80) NOT NULL,
+  experience INT NOT NULL DEFAULT 0,
+  available_time VARCHAR(120) NOT NULL,
+  short_bio TEXT NOT NULL,
+  profile_photo VARCHAR(255),
+  id_proof VARCHAR(255),
+  status VARCHAR(20) NOT NULL DEFAULT 'pending',
+  rejection_reason TEXT,
+  login_id VARCHAR(40),
+  temp_password VARCHAR(255),
+  reviewed_by INT NULL,
+  reviewed_at DATETIME NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_helper_app_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+  CONSTRAINT fk_helper_app_reviewer FOREIGN KEY (reviewed_by) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS helpers (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL UNIQUE,
+  application_id INT NULL UNIQUE,
+  login_id VARCHAR(40) NOT NULL UNIQUE,
+  full_name VARCHAR(140) NOT NULL,
+  email VARCHAR(140) NOT NULL,
+  mobile_number VARCHAR(20) NOT NULL,
+  address VARCHAR(255) NOT NULL,
+  city VARCHAR(120) NOT NULL,
+  state VARCHAR(120) NOT NULL,
+  pincode VARCHAR(12) NOT NULL,
+  aadhaar_number VARCHAR(20) NOT NULL,
+  skill_category VARCHAR(80) NOT NULL,
+  experience INT NOT NULL DEFAULT 0,
+  available_time VARCHAR(120) NOT NULL,
+  short_bio TEXT NOT NULL,
+  profile_photo VARCHAR(255),
+  id_proof VARCHAR(255),
+  password_hash VARCHAR(255) NOT NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'active',
+  availability_on TINYINT(1) NOT NULL DEFAULT 1,
+  hourly_rate DOUBLE NOT NULL DEFAULT 0,
+  total_earnings DOUBLE NOT NULL DEFAULT 0,
+  average_rating DOUBLE NOT NULL DEFAULT 0,
+  total_jobs INT NOT NULL DEFAULT 0,
+  completed_jobs INT NOT NULL DEFAULT 0,
+  pending_jobs INT NOT NULL DEFAULT 0,
+  last_login_at DATETIME NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_helpers_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  CONSTRAINT fk_helpers_application FOREIGN KEY (application_id) REFERENCES helper_applications(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS bookings (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  customer_id INT NOT NULL,
+  helper_id INT NOT NULL,
+  service_category VARCHAR(80) NOT NULL,
+  customer_name VARCHAR(140) NOT NULL,
+  customer_phone VARCHAR(20) NOT NULL,
+  location VARCHAR(255) NOT NULL,
+  scheduled_at DATETIME NOT NULL,
+  payment_amount DOUBLE NOT NULL DEFAULT 0,
+  payment_status VARCHAR(20) NOT NULL DEFAULT 'unpaid',
+  status VARCHAR(20) NOT NULL DEFAULT 'pending',
+  notes TEXT,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_bookings_customer FOREIGN KEY (customer_id) REFERENCES users(id) ON DELETE CASCADE,
+  CONSTRAINT fk_bookings_helper FOREIGN KEY (helper_id) REFERENCES helpers(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS reviews (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  booking_id INT NOT NULL UNIQUE,
+  customer_id INT NOT NULL,
+  helper_id INT NOT NULL,
+  rating INT NOT NULL,
+  comment TEXT,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_reviews_booking FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE,
+  CONSTRAINT fk_reviews_customer FOREIGN KEY (customer_id) REFERENCES users(id) ON DELETE CASCADE,
+  CONSTRAINT fk_reviews_helper FOREIGN KEY (helper_id) REFERENCES helpers(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS admin_logs (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  admin_id INT NOT NULL,
+  action VARCHAR(120) NOT NULL,
+  entity_type VARCHAR(80),
+  entity_id VARCHAR(40),
+  details TEXT,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_admin_logs_admin FOREIGN KEY (admin_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS notifications (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  title VARCHAR(140) NOT NULL,
+  message VARCHAR(500) NOT NULL,
+  category VARCHAR(40) NOT NULL DEFAULT 'info',
+  is_read TINYINT(1) NOT NULL DEFAULT 0,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_notifications_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

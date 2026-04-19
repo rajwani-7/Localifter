@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %}Customer Dashboard | LocaLifter{% endblock %}
+{% block content %}
+<section class="space-y-8">
+  <div class="rounded-[2rem] border border-white/70 bg-white/85 p-6 shadow-glass backdrop-blur-xl">
+    <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+      <div>
+        <div class="inline-flex rounded-full bg-blue-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.3em] text-blue-700">Want a Helper</div>
+        <h1 class="mt-4 font-display text-4xl font-extrabold tracking-tight text-slate-950">Search helpers by category, rating, and location.</h1>
+        <p class="mt-2 text-slate-600">Use the search bar and advanced filters to discover the right helper for each job.</p>
+      </div>
+      <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+        <div class="font-bold text-slate-900">Notifications</div>
+        <div class="mt-2 space-y-2">
+          {% for note in unread_notifications %}
+            <div class="rounded-2xl bg-white px-3 py-2 shadow-sm">{{ note.title }}</div>
+          {% else %}
+            <div>No unread notifications.</div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-6 grid gap-4 lg:grid-cols-[1.4fr_0.9fr]">
+      <div>
+        <label class="mb-2 block text-sm font-semibold text-slate-700">Search helpers</label>
+        <input id="helper-search" type="search" placeholder="Search by name, city, or bio" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100" />
+      </div>
+      <div>
+        <label class="mb-2 block text-sm font-semibold text-slate-700">Filter by category</label>
+        <select id="helper-category" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100">
+          <option value="">All categories</option>
+          {% for category in categories %}
+            <option value="{{ category }}">{{ category }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div id="helper-results" data-endpoint="{{ url_for('helper.search_helpers') }}" class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+    {% for helper in helpers %}
+      <a href="{{ url_for('helper.helper_profile', helper_id=helper.id) }}" class="group rounded-[2rem] border border-white/70 bg-white/85 p-5 shadow-glass backdrop-blur-xl transition hover:-translate-y-1">
+        <div class="flex items-center gap-4">
+          <div class="h-16 w-16 overflow-hidden rounded-2xl bg-slate-100">
+            {% if helper.profile_photo %}
+              <img src="{{ url_for('static', filename=helper.profile_photo) }}" alt="{{ helper.full_name }}" class="h-full w-full object-cover">
+            {% else %}
+              <div class="flex h-full w-full items-center justify-center text-2xl">🧰</div>
+            {% endif %}
+          </div>
+          <div>
+            <div class="text-lg font-bold text-slate-950">{{ helper.full_name }}</div>
+            <div class="text-sm text-slate-500">{{ helper.skill_category }} · {{ helper.city }}</div>
+          </div>
+        </div>
+        <div class="mt-5 grid grid-cols-2 gap-3 text-sm text-slate-600">
+          <div class="rounded-2xl bg-slate-50 p-3">⭐ {{ helper.average_rating }}</div>
+          <div class="rounded-2xl bg-slate-50 p-3">Jobs {{ helper.completed_jobs }}</div>
+          <div class="rounded-2xl bg-slate-50 p-3">₹{{ '%.0f'|format(helper.hourly_rate) }}/hr</div>
+          <div class="rounded-2xl bg-slate-50 p-3">{% if helper.availability_on %}Available{% else %}Offline{% endif %}</div>
+        </div>
+        <p class="mt-4 text-sm leading-6 text-slate-600">{{ helper.short_bio[:120] }}{% if helper.short_bio|length > 120 %}...{% endif %}</p>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  window.LocalLifterSearch = {
+    endpoint: document.getElementById('helper-results').dataset.endpoint,
+  };
+</script>
+{% endblock %}

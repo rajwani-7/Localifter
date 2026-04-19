@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+*.db
+instance/
+app/static/uploads/
+
+# Env
+.env
+
+# OS
+.DS_Store
+Thumbs.db

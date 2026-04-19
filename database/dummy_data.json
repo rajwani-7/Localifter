@@ -1,0 +1,20 @@
+{
+  "demoCredentials": [
+    {
+      "email": "anita.user@localift.com",
+      "password": "password123",
+      "role": "user"
+    },
+    {
+      "email": "rahul.plumber@localift.com",
+      "password": "password123",
+      "role": "helper"
+    }
+  ],
+  "sampleBooking": {
+    "helper_id": 2,
+    "service_category": "Plumber",
+    "scheduled_at": "2026-04-16T10:30:00Z",
+    "location_text": "Andheri West, Mumbai"
+  }
+}
