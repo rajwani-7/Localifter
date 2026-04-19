@@ -30,36 +30,36 @@
       <div class="pointer-events-none absolute inset-0 opacity-60 [background-image:linear-gradient(rgba(148,163,184,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.12)_1px,transparent_1px)] [background-size:34px_34px]"></div>
 
       <header class="sticky top-0 z-40 border-b border-white/60 bg-white/70 backdrop-blur-xl">
-        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-          <a href="{{ url_for('auth.home') }}" class="flex items-center gap-3">
+        <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+          <a href="{{ url_for('auth.home') }}" class="flex items-center gap-3 self-start sm:self-auto">
             <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 text-lg font-extrabold text-white shadow-lg shadow-blue-500/20">L</div>
             <div>
               <div class="font-display text-xl font-extrabold tracking-tight text-slate-950">LocaLifter</div>
-              <div class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Service marketplace</div>
+              <div class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500 sm:tracking-[0.28em]">Service marketplace</div>
             </div>
           </a>
 
-          <nav class="flex items-center gap-2 sm:gap-3">
-            <a href="{{ url_for('auth.home') }}" class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-700">Home</a>
+          <nav class="flex w-full flex-wrap items-center justify-start gap-2 sm:w-auto sm:justify-end sm:gap-3">
+            <a href="{{ url_for('auth.home') }}" class="rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-700 sm:px-4 sm:text-sm">Home</a>
             {% if current_user.is_authenticated %}
               {% if current_user.role == 'admin' %}
-                <a href="{{ url_for('admin.dashboard') }}" class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-700">Admin Dashboard</a>
+                <a href="{{ url_for('admin.dashboard') }}" class="rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-700 sm:px-4 sm:text-sm">Admin Dashboard</a>
               {% elif current_user.role == 'helper' %}
-                <a href="{{ url_for('helper.helper_dashboard') }}" class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-700">Helper Dashboard</a>
+                <a href="{{ url_for('helper.helper_dashboard') }}" class="rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-700 sm:px-4 sm:text-sm">Helper Dashboard</a>
               {% else %}
-                <a href="{{ url_for('helper.customer_dashboard') }}" class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-700">Customer Dashboard</a>
+                <a href="{{ url_for('helper.customer_dashboard') }}" class="rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-700 sm:px-4 sm:text-sm">Customer Dashboard</a>
               {% endif %}
-              <a href="{{ url_for('auth.logout') }}" class="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition hover:-translate-y-0.5 hover:bg-slate-800">Logout</a>
+              <a href="{{ url_for('auth.logout') }}" class="rounded-full bg-slate-900 px-3 py-2 text-xs font-semibold text-white shadow-lg shadow-slate-900/10 transition hover:-translate-y-0.5 hover:bg-slate-800 sm:px-4 sm:text-sm">Logout</a>
             {% else %}
-              <a href="{{ url_for('auth.register') }}" class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-700">Sign Up</a>
-              <a href="{{ url_for('auth.login') }}" class="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition hover:-translate-y-0.5 hover:bg-slate-800">Login</a>
+              <a href="{{ url_for('auth.register') }}" class="rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-700 sm:px-4 sm:text-sm">Sign Up</a>
+              <a href="{{ url_for('auth.login') }}" class="rounded-full bg-slate-900 px-3 py-2 text-xs font-semibold text-white shadow-lg shadow-slate-900/10 transition hover:-translate-y-0.5 hover:bg-slate-800 sm:px-4 sm:text-sm">Login</a>
             {% endif %}
           </nav>
         </div>
       </header>
 
       {% if not current_user.is_authenticated or current_user.role != 'admin' %}
-      <div class="fixed right-4 top-1/2 z-50 -translate-y-1/2">
+      <div class="fixed right-4 top-1/2 z-50 hidden -translate-y-1/2 xl:block">
         <details class="group rounded-l-3xl border border-white/70 bg-white/90 shadow-2xl shadow-slate-900/10 backdrop-blur-xl">
           <summary class="cursor-pointer list-none rounded-l-3xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">Admin Login</summary>
           <div class="w-72 p-4">

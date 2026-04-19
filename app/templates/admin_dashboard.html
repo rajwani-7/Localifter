@@ -6,7 +6,7 @@
     <div class="flex flex-wrap items-end justify-between gap-4">
       <div>
         <div class="inline-flex rounded-full bg-blue-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.3em] text-blue-700">Admin Panel</div>
-        <h1 class="mt-4 font-display text-4xl font-extrabold tracking-tight text-slate-950">Marketplace control center</h1>
+        <h1 class="mt-4 font-display text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">Marketplace control center</h1>
         <p class="mt-2 text-slate-600">Approve helpers, manage users, monitor jobs, review ratings, and track revenue.</p>
       </div>
       <a href="{{ url_for('auth.logout') }}" class="rounded-2xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white">Logout</a>
@@ -48,7 +48,7 @@
                   <a href="{{ url_for('admin.helper_details', application_id=app.id) }}" class="rounded-full border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700">View</a>
                   {% if app.status == 'pending' %}
                     <form method="POST" action="{{ url_for('admin.approve_helper', application_id=app.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}" /><button class="rounded-full bg-emerald-600 px-3 py-2 text-xs font-semibold text-white">Approve</button></form>
-                    <form method="POST" action="{{ url_for('admin.reject_helper', application_id=app.id) }}" class="flex gap-2"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}" /><input name="reason" placeholder="Reason" class="rounded-full border border-slate-200 px-3 py-2 text-xs outline-none" /><button class="rounded-full bg-rose-600 px-3 py-2 text-xs font-semibold text-white">Reject</button></form>
+                    <form method="POST" action="{{ url_for('admin.reject_helper', application_id=app.id) }}" class="flex flex-wrap gap-2"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}" /><input name="reason" placeholder="Reason" class="w-full rounded-full border border-slate-200 px-3 py-2 text-xs outline-none sm:w-auto" /><button class="rounded-full bg-rose-600 px-3 py-2 text-xs font-semibold text-white">Reject</button></form>
                   {% endif %}
                 </div>
               </td>
