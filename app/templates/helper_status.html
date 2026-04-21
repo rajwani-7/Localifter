@@ -30,12 +30,17 @@
         <div class="mt-2 text-2xl font-extrabold text-slate-950">{{ application.login_id }}</div>
       </div>
       <div class="rounded-3xl border border-emerald-200 bg-emerald-50 p-6">
-        <div class="text-sm font-bold uppercase tracking-[0.24em] text-emerald-700">Password</div>
-        <div class="mt-2 text-2xl font-extrabold text-slate-950">{{ application.temp_password }}</div>
+        {% if application.temp_password %}
+          <div class="text-sm font-bold uppercase tracking-[0.24em] text-emerald-700">Password</div>
+          <div class="mt-2 text-2xl font-extrabold text-slate-950">{{ application.temp_password }}</div>
+        {% else %}
+          <div class="text-sm font-bold uppercase tracking-[0.24em] text-emerald-700">Password</div>
+          <div class="mt-2 text-lg font-semibold text-slate-950">Use your existing account password</div>
+        {% endif %}
       </div>
     </div>
     <div class="mt-6 rounded-3xl border border-slate-200 bg-white p-6">
-      <p class="text-slate-700">Your helper profile is live. Use the credentials above to log in and access the helper dashboard.</p>
+      <p class="text-slate-700">Your helper profile is live. Use the login ID above together with either the temporary password shown here or your existing account password, depending on whether this was a new account.</p>
       <a href="{{ url_for('auth.login') }}" class="mt-4 inline-flex rounded-2xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white">Go to Login</a>
     </div>
   {% else %}

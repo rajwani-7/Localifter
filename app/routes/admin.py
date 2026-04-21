@@ -115,7 +115,9 @@ def approve_helper(application_id: int):
         return redirect(url_for("admin.dashboard"))
 
     user = User.query.get(application.user_id) if application.user_id else None
+    temp_password = None
     if not user:
+        temp_password = _generate_temp_password()
         user = User(
             full_name=application.full_name,
             email=application.email,
@@ -123,11 +125,9 @@ def approve_helper(application_id: int):
             address=application.address,
             role="helper",
         )
-        user.set_password(_generate_temp_password())
+        user.set_password(temp_password)
         db.session.add(user)
         db.session.flush()
-
-    temp_password = _generate_temp_password()
     login_id = _generate_helper_login_id()
 
     user.full_name = application.full_name
@@ -136,7 +136,11 @@ def approve_helper(application_id: int):
     user.address = application.address
     user.role = "helper"
     user.is_active = True
-    user.set_password(temp_password)
+
+    if temp_password is None:
+        temp_password = application.temp_password
+    else:
+        user.set_password(temp_password)
 
     helper = Helper(
         user_id=user.id,
@@ -156,7 +160,7 @@ def approve_helper(application_id: int):
         short_bio=application.short_bio,
         profile_photo=application.profile_photo,
         id_proof=application.id_proof,
-        password_hash=bcrypt.generate_password_hash(temp_password).decode("utf-8"),
+        password_hash=user.password_hash,
         hourly_rate={"Electrician": 499, "Cleaner": 349, "Chef": 549, "Mechanic": 599, "Designer": 449, "Painter": 379, "Plumber": 469, "Carpenter": 489}.get(application.skill_category, 399),
         status="active",
         availability_on=True,
