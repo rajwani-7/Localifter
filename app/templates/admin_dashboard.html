@@ -29,17 +29,19 @@
 
   <div class="grid gap-6 xl:grid-cols-2">
     <div class="rounded-[2rem] border border-white/70 bg-white/85 p-6 shadow-glass backdrop-blur-xl">
-      <div class="text-sm font-bold uppercase tracking-[0.24em] text-blue-700">Pending helper requests</div>
+      <div class="text-sm font-bold uppercase tracking-[0.24em] text-blue-700">Helper applications</div>
       <div class="mt-4 overflow-x-auto">
         <table class="min-w-full text-left text-sm">
           <thead class="text-xs uppercase tracking-wider text-slate-500">
-            <tr><th class="py-3 pr-4">Name</th><th class="py-3 pr-4">Category</th><th class="py-3 pr-4">Status</th><th class="py-3 pr-4">Actions</th></tr>
+            <tr><th class="py-3 pr-4">Name</th><th class="py-3 pr-4">Category</th><th class="py-3 pr-4">Login ID</th><th class="py-3 pr-4">Password</th><th class="py-3 pr-4">Status</th><th class="py-3 pr-4">Actions</th></tr>
           </thead>
           <tbody>
             {% for app in applications %}
             <tr class="border-t border-slate-100">
               <td class="py-4 pr-4 font-semibold text-slate-950">{{ app.full_name }}</td>
               <td class="py-4 pr-4 text-slate-600">{{ app.skill_category }}</td>
+              <td class="py-4 pr-4 text-slate-600">{{ app.login_id or 'Pending' }}</td>
+              <td class="py-4 pr-4 text-slate-600">{{ app.temp_password or 'Pending' }}</td>
               <td class="py-4 pr-4">
                 <span class="rounded-full px-3 py-1 text-xs font-bold {% if app.status == 'pending' %}bg-amber-100 text-amber-800{% elif app.status == 'approved' %}bg-emerald-100 text-emerald-800{% else %}bg-rose-100 text-rose-800{% endif %}">{{ app.status|upper }}</span>
               </td>
@@ -54,7 +56,7 @@
               </td>
             </tr>
             {% else %}
-            <tr><td colspan="4" class="py-8 text-center text-slate-500">No applications found.</td></tr>
+            <tr><td colspan="6" class="py-8 text-center text-slate-500">No applications found.</td></tr>
             {% endfor %}
           </tbody>
         </table>

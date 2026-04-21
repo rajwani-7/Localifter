@@ -79,7 +79,12 @@ def dashboard():
     completed_jobs = Booking.query.filter_by(status="completed").count()
     revenue = db.session.query(func.coalesce(func.sum(Booking.payment_amount), 0)).filter(Booking.status == "completed").scalar() or 0
 
-    applications = HelperApplication.query.filter_by(status="pending").order_by(HelperApplication.created_at.desc()).limit(8).all()
+    applications = (
+        HelperApplication.query.filter(HelperApplication.status.in_(["pending", "approved"]))
+        .order_by(HelperApplication.created_at.desc())
+        .limit(20)
+        .all()
+    )
     helpers = Helper.query.order_by(Helper.average_rating.desc(), Helper.completed_jobs.desc()).limit(10).all()
     customers = User.query.filter_by(role="customer").order_by(User.created_at.desc()).limit(10).all()
     reviews = Review.query.order_by(Review.created_at.desc()).limit(8).all()
@@ -115,9 +120,8 @@ def approve_helper(application_id: int):
         return redirect(url_for("admin.dashboard"))
 
     user = User.query.get(application.user_id) if application.user_id else None
-    temp_password = None
+    temp_password = _generate_temp_password()
     if not user:
-        temp_password = _generate_temp_password()
         user = User(
             full_name=application.full_name,
             email=application.email,
@@ -125,7 +129,6 @@ def approve_helper(application_id: int):
             address=application.address,
             role="helper",
         )
-        user.set_password(temp_password)
         db.session.add(user)
         db.session.flush()
     login_id = _generate_helper_login_id()
@@ -137,10 +140,7 @@ def approve_helper(application_id: int):
     user.role = "helper"
     user.is_active = True
 
-    if temp_password is None:
-        temp_password = application.temp_password
-    else:
-        user.set_password(temp_password)
+    user.set_password(temp_password)
 
     helper = Helper(
         user_id=user.id,
@@ -178,7 +178,7 @@ def approve_helper(application_id: int):
     _log_admin_action("approve_helper", "helper_application", str(application.id), f"Approved helper login {login_id}")
     db.session.commit()
 
-    flash(f"Approved {application.full_name}. Login ID: {login_id}", "success")
+    flash(f"Approved {application.full_name}. Login ID: {login_id} | Password: {temp_password}", "success")
     return redirect(url_for("admin.dashboard"))
 
 

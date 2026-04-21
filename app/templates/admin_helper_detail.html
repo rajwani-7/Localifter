@@ -19,6 +19,7 @@
 
     <div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
       <div class="rounded-3xl bg-slate-50 p-5"><div class="text-sm text-slate-500">Login ID</div><div class="mt-2 text-xl font-extrabold">{{ application.login_id or 'Pending' }}</div></div>
+      <div class="rounded-3xl bg-slate-50 p-5"><div class="text-sm text-slate-500">Password</div><div class="mt-2 text-xl font-extrabold">{{ application.temp_password or 'Pending' }}</div></div>
       <div class="rounded-3xl bg-slate-50 p-5"><div class="text-sm text-slate-500">Experience</div><div class="mt-2 text-xl font-extrabold">{{ application.experience }} years</div></div>
       <div class="rounded-3xl bg-slate-50 p-5"><div class="text-sm text-slate-500">Customer count</div><div class="mt-2 text-xl font-extrabold">{{ customer_count }}</div></div>
       <div class="rounded-3xl bg-slate-50 p-5"><div class="text-sm text-slate-500">Status</div><div class="mt-2 text-xl font-extrabold">{{ application.status|upper }}</div></div>
