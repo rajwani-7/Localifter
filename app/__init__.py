@@ -37,9 +37,10 @@ def _resolve_database_uri() -> str:
     if local_mysql_uri and find_spec("pymysql") is not None:
         return local_mysql_uri
 
-    # On Render, fall back to /tmp sqlite only if DATABASE_URL was not injected.
+    # In Render/production, fail fast if DATABASE_URL is missing.
+    # This avoids silently booting on ephemeral sqlite and "losing" visible data.
     if os.environ.get("RENDER"):
-        return "sqlite:////tmp/localift_flask.db"
+        raise RuntimeError("DATABASE_URL is required on Render. Refusing to start with sqlite fallback.")
 
     return f"sqlite:///{os.path.join(os.getcwd(), 'localift_flask.db')}"
 
